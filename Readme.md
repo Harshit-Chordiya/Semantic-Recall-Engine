@@ -147,13 +147,13 @@ Decide whether you want maximum privacy (Local) or peak quality (Cloud).
 ### 3. Launch the Server
 Boot up the main FastAPI endpoint:
 ```bash
-uv run uvicorn rag_memory_agent.http:app --reload --port 8000
+uv run uvicorn semantic_recall_engine.http:app --reload --port 8000
 ```
 
 ### 4. Interactive Terminal Agent
 If you bypass the graphical UI, you can chat directly from your command line:
 ```bash
-uv run python -m rag_memory_agent.agent
+uv run python -m semantic_recall_engine.agent
 > Which article broke down HNSW structures?
 
 SRE Synopsis:
