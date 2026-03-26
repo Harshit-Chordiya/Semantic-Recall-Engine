@@ -24,15 +24,21 @@ In particular, it helps knowledge workers, engineers, product managers, analysts
 ## Interface Previews & Demonstration
 
 <div align="center">
-  <img src="files/ui_search.png" width="300" alt="Search Interface">
-  <img src="files/ui_results.png" width="300" alt="Chatbot Output">
-  <img src="files/ui_config.png" width="300" alt="Settings Pane">
+  <img src="files/ui_search.png" width="600" alt="Search Interface">
+  <p><i>The search interface of the Semantic Recall Engine popup.</i></p>
+
+  <img src="files/ui_results.png" width="600" alt="Chatbot Output">
+  <p><i>Integrated AI summary appearing alongside regular Google search results.</i></p>
+
+  <img src="files/ui_config.png" width="600" alt="Settings Pane">
+  <p><i>Settings pane for configuration, API routing, and managing the privacy denylist.</i></p>
+
+  <img src="files/cli_agent.png" width="800" alt="CLI Agent Output">
+  <p><i>Interactive terminal agent for executing recall queries via the command line.</i></p>
 </div>
 
 ### PPT & Action Demo
-<video controls width="100%">
-  <source src="files/PPT_Demo.mp4" type="video/mp4">
-</video>
+[Watch the full PPT & Action Demo Video on Google Drive](https://drive.google.com/file/d/1HAB70tyG3K_SjALVA8YVslxwII-DKqfp/view?usp=sharing)
 
 
 
@@ -44,27 +50,7 @@ The overarching design is inspired by logical reasoning steps: **Observation →
 
 ![](files/use_case_diagram.png)
 
-### System Flow
-```mermaid
-%% Agentic Memory System Architecture (Recolored)
-flowchart LR
-    A["Browser Extension"] --> B["API Layer (FastAPI)"]
-    B --> C["Processing Engine"]
-    C --> D["Tool Interface Layer"]
-    D --> E["Reasoning Engine"]
-    E --> F["Vector Memory Store"]
 
-    %% Feedback loop
-    F --> E
-
-    %% Styling
-    style A fill:#0ea5e9,color:#ffffff
-    style B fill:#f97316,color:#ffffff
-    style C fill:#6366f1,color:#ffffff
-    style D fill:#a855f7,color:#ffffff
-    style E fill:#e11d48,color:#ffffff
-    style F fill:#14b8a6,color:#ffffff 
-```
 
 ### Architecture components
 * **Perception (LLM):** extract intents, classify page region to index, normalize titles.
@@ -216,5 +202,3 @@ score = (s_wt * sim_v) + (t_wt * ctx_v)
 In essence: **Similarity ensures accuracy, while temporal dynamics ensure freshness.**
 
 ---
-
-*This architecture showcases a definitive leap from standard RAG chatbots to a continuous, self-organizing digital brain.*
