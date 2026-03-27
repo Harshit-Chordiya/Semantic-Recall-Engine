@@ -261,3 +261,35 @@ def process_documents_core(directory: str) -> Dict[str, Any]:
             except Exception:
                 continue
     return {"ok": True, "indexed_chunks": added}
+
+def synthesize_answer_core(query: str, search_results: List[Dict[str, Any]]) -> str:
+    """
+    Given a query and retrieved chunks, synthesize an AI response using Gemini.
+    """
+    from .config import GEMINI_API_KEY, GEMINI_MODEL_DECISION
+    if not GEMINI_API_KEY:
+        return "Chatbot answer synthesis requires GEMINI_API_KEY in .env."
+    
+    if not search_results:
+        return "I could not find any relevant memories to answer your question."
+        
+    try:
+        import google.genai as genai
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        
+        ctx = ""
+        for i, r in enumerate(search_results):
+            content = r.get('chunk') or r.get('snippet', '')
+            ctx += f"[{i+1}] Source: {r.get('title', 'Unknown')} ({r.get('url', '')})\nContent: {content}\n\n"
+            
+        system = "You are the Semantic Recall Engine. Your job is to answer the user's question based ONLY on the web content provided from their browsing history. Do not hallucinate outside knowledge."
+        prompt = f"{system}\n\nMemories Found:\n{ctx}\nUser Question: {query}\n\nAnswer concisely and truthfully:"
+        
+        resp = client.models.generate_content(
+            model=GEMINI_MODEL_DECISION,
+            contents=[{"role": "user", "parts": [{"text": prompt}]}],
+            config={"temperature": 0.2}
+        )
+        return (resp.text or "").strip()
+    except Exception as e:
+        return f"Sorry, AI synthesis failed: {e}"
