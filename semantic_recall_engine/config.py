@@ -16,3 +16,41 @@ GOOGLE_API_KEY      = os.getenv("GOOGLE_API_KEY", "")
 GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", GOOGLE_API_KEY)  # fallback
 GEMINI_MODEL_DECISION   = os.getenv("GEMINI_MODEL_DECISION", "gemini-2.0-flash")
 GEMINI_MODEL_PERCEPTION = os.getenv("GEMINI_MODEL_PERCEPTION", "gemini-2.0-flash")
+
+# ---------- Embeddings ----------
+EMBEDDINGS_PROVIDER = os.getenv("EMBEDDINGS_PROVIDER", "ollama").lower()  # "google" or "ollama"
+
+# --- Google Embeddings ---
+GOOGLE_EMBED_MODEL = os.getenv("GOOGLE_EMBED_MODEL", "text-embedding-004")
+
+# --- Ollama Embeddings ---
+EMBED_URL   = os.getenv("EMBED_URL", "http://localhost:11434/api/embeddings")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
+
+# ---------- Chunking / Index ----------
+CHUNK_SIZE      = int(os.getenv("CHUNK_SIZE", "900"))
+CHUNK_OVERLAP   = int(os.getenv("CHUNK_OVERLAP", "160"))
+RECENCY_ALPHA   = float(os.getenv("RECENCY_ALPHA", "0.05"))
+
+# --- Temporal ranking knobs ---
+HALF_LIFE_DAYS     = float(os.getenv("HALF_LIFE_DAYS", "7"))   # recency half-life
+FRESHNESS_WEIGHT   = float(os.getenv("FRESHNESS_WEIGHT", "0.7"))
+POPULARITY_WEIGHT  = float(os.getenv("POPULARITY_WEIGHT", "0.3"))
+MAX_TEMPORAL_BOOST = float(os.getenv("MAX_TEMPORAL_BOOST", "0.25"))  # ≤ 25% lift
+SIM_WEIGHT        = float(os.getenv("SIM_WEIGHT", "0.9"))
+TEMP_WEIGHT       = float(os.getenv("TEMP_WEIGHT", "0.1"))
+HALF_LIFE_DAYS    = float(os.getenv("HALF_LIFE_DAYS", "7"))
+FRESHNESS_WEIGHT  = float(os.getenv("FRESHNESS_WEIGHT", "0.7"))
+POPULARITY_WEIGHT = float(os.getenv("POPULARITY_WEIGHT", "0.3"))
+
+
+# ---------- Optional tuning ----------
+EMBED_BATCH_SIZE = int(os.getenv("EMBED_BATCH_SIZE", "100"))  # for Google
+MAX_CHUNKS_PER_DOC = int(os.getenv("MAX_CHUNKS_PER_DOC", "500"))
+
+# ---------- Derived paths ----------
+INDEX_PATH = FAISS_DIR / "index.bin"
+META_PATH  = FAISS_DIR / "metadata.jsonl"
+
+FAISS_DIR.mkdir(parents=True, exist_ok=True)
+DOCS_DIR.mkdir(parents=True, exist_ok=True)
