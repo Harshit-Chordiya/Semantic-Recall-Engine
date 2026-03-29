@@ -1,0 +1,15 @@
+faiss_index/index.bin
+faiss_index/metadata.jsonl
+documents/*.tmp
+.DS_Store
+uv.lock
+
+.venv/
+__pycache__/
+*.pyc
+
+.env
+.mypy_cache/
+.pytest_cache/
+.cache/
+
